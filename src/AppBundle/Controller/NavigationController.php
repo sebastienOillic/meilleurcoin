@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class NavigationController
- * @Route("/", name="navigation")
+ * @Route("/",)
  */
 class NavigationController extends Controller
 {
