@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block content %}
+<br>
+<div class="card">
+    <div class="card-header">
+        {{ ad.title }}
+      </div>
+      <ul class="list-group list-group-flush">
+          <div class="card-body">
+            
+            <p class="card-text">{{ ad.description }}</p>
+          </div>
+        <li class="list-group-item">
+            <h5 class="card-title">soumis le {{ ad.dateCreated | date('d/m/Y') }}</h5>
+        </li>
+        <li class="list-group-item">
+            {{ ad.city }} <br>{{ ad.zipCode }}
+        </li>
+        <li class="list-group-item">
+            <h5>Prix : {{ ad.price }}</h5><button class="btn-primary btn">Acheter</button>
+        </li>
+    </ul>
+</div>
+{% endblock %}

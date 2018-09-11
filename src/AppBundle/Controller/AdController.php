@@ -18,6 +18,11 @@ class AdController extends Controller
      */
     public function addAction(Request $request)
     {
+        //form to create
+        
+
+
+        //fetching form
         return new Response('Creation d\'annonce');
     }
 
@@ -26,6 +31,19 @@ class AdController extends Controller
      */
     public function editAction(Request $request)
     {
+
+        $repoAd = $this->getDoctrine()->getRepository(Ad::class);
+        $resCheck = $repoAd->findOneBy(['id' => $id]);
+        if ($resCheck == null){
+            //id non-existing
+            return new Response('You douche!');
+
+        } else {
+        //form to create
+
+        }
+
+        //fetching form
         return new Response('Edition d\'annonce');
     }
 
@@ -34,17 +52,11 @@ class AdController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $qbCheck = $em->createQueryBuilder();
-        $query = $qbCheck->SELECT('a')
-            ->FROM('AppBundle\Entity\Ad', 'a')
-            ->WHERE('a.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery();
-        $resCheck = $query->getResult();
-        if ($resCheck == []){
-            //id inexistant
-        return new Response('You douche!');
+        $repoAd = $this->getDoctrine()->getRepository(Ad::class);
+        $resCheck = $repoAd->findOneBy(['id' => $id]);
+        if ($resCheck == null){
+            //id non-existing
+            return new Response('You douche!');
 
         } else {
             
@@ -55,9 +67,22 @@ class AdController extends Controller
     /**
      * @Route(path="/view/{id}", name="view", requirements={"id" = "\d+"})
      */
-    public function viewAction(Request $request)
+    public function viewAction(Request $request, $id)
     {
-        return new Response('Affichage d\'annonce');
+        $repoAd = $this->getDoctrine()->getRepository(Ad::class);
+        $resCheck = $repoAd->findOneBy(['id' => $id]);
+        dump($resCheck);
+        if ($resCheck == null){
+            //id non-existing
+            return new Response('You douche!');
+
+        } else {
+            
+            return $this->render('ad/view.html.twig', [
+                'ad' => $resCheck,
+                'title' => $resCheck->getTitle()
+            ] );
+        }
     }
 
     /**
@@ -67,4 +92,6 @@ class AdController extends Controller
     {
         return new Response('liste des annonces');
     }
+
+    
 }
