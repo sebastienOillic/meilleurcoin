@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Ad
  *
@@ -25,6 +25,10 @@ class Ad
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(max="255")
      */
     private $title;
 
@@ -32,6 +36,9 @@ class Ad
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      */
     private $description;
 
@@ -39,6 +46,10 @@ class Ad
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(max="255")
      */
     private $city;
 
@@ -46,6 +57,10 @@ class Ad
      * @var string
      *
      * @ORM\Column(name="zip_code", type="string", length=6)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @Assert\Length(max="6")
      */
     private $zipCode;
 
@@ -53,6 +68,9 @@ class Ad
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Type("float")
      */
     private $price;
 
@@ -60,6 +78,9 @@ class Ad
      * @var \DateTime
      *
      * @ORM\Column(name="date_created", type="datetime")
+     * 
+     * @Assert\NotBlank()
+     * @Assert\DateTime()
      */
     private $dateCreated;
 
@@ -69,7 +90,7 @@ class Ad
      *
      * @return int
      */
-    public function getId()
+    public function getId() : ? int
     {
         return $this->id;
     }
@@ -93,7 +114,7 @@ class Ad
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle() : ?string
     {
         return $this->title;
     }
@@ -117,7 +138,7 @@ class Ad
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription() : ?string
     {
         return $this->description;
     }
@@ -141,7 +162,7 @@ class Ad
      *
      * @return string
      */
-    public function getCity()
+    public function getCity() : ?string
     {
         return $this->city;
     }
@@ -165,7 +186,7 @@ class Ad
      *
      * @return string
      */
-    public function getZipCode()
+    public function getZipCode() : ?string
     {
         return $this->zipCode;
     }
@@ -189,7 +210,7 @@ class Ad
      *
      * @return float
      */
-    public function getPrice()
+    public function getPrice() : ? float
     {
         return $this->price;
     }
@@ -201,7 +222,7 @@ class Ad
      *
      * @return Ad
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated($dateCreated) : ?\DateTime
     {
         $this->dateCreated = $dateCreated;
 
