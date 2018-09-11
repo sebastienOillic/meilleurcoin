@@ -5,8 +5,9 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Entity\Ad;
 use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Entity\Ad;
+use AppBundle\Form\AdType;
 
 /**
  * @Route(path="/ad", name="ad_")
@@ -18,12 +19,20 @@ class AdController extends Controller
      */
     public function addAction(Request $request)
     {
+        $ad = new Ad();
         //form to create
-        
+        $form = $this->createForm(AdType::class, $ad);
 
+        $form->handleRequest($request);
 
+        if ($form->isValid() && $form->isSubmitted()){
+            //add to base
+            $ad->setDateCreated(new \DateTime);
+            dump($ad);
+            return new Response('<html><body></body></html>');
+        }
         //fetching form
-        return new Response('Creation d\'annonce');
+        return $this->render('ad/create.html.twig', ['title' => 'Création d\'une annonce', 'form' => $form->createView()]);
     }
 
     /**
