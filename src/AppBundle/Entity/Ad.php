@@ -78,12 +78,17 @@ class Ad
      * @var \DateTime
      *
      * @ORM\Column(name="date_created", type="datetime")
-     * 
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      */
     private $dateCreated;
 
+    /**
+     * @var Category
+     * 
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @Assert\Type("\AppBundle\Entity\Category")
+     * @Assert\NotBlank()
+     */
+    private $category;
 
     /**
      * Get id
@@ -222,7 +227,7 @@ class Ad
      *
      * @return Ad
      */
-    public function setDateCreated($dateCreated) : ?\DateTime
+    public function setDateCreated($dateCreated) : self
     {
         $this->dateCreated = $dateCreated;
 
@@ -234,9 +239,33 @@ class Ad
      *
      * @return \DateTime
      */
-    public function getDateCreated()
+    public function getDateCreated() : ?\DateTime
     {
         return $this->dateCreated;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \DateTime $category
+     *
+     * @return Ad
+     */
+    public function setCategory($category) : self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \DateTime
+     */
+    public function getCategory() : ?Category
+    {
+        return $this->category;
     }
 }
 

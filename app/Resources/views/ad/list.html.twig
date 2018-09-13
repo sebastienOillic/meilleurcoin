@@ -1,0 +1,52 @@
+{% form_theme categoryForm 'bootstrap_4_layout.html.twig' %}
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+{% block message %}
+    {{ parent() }}
+{% endblock message %}
+<div class="row">
+    <div class="col">
+
+        {{ form_start(categoryForm) }}
+        {{ form_widget(categoryForm) }}
+        {{ form_end(categoryForm) }}
+    </div>
+    <div class="col">
+        
+    </div>
+</div>
+{% if ads|length == 0 %}
+<div class="alert alert-warning" role="alert">
+        Aucune annonce ne correspond à votre recherche.
+    </div>
+{% else %}
+    {% for ad in ads %}
+    <div class="card">
+        <div class="card-header">
+            {{ ad.title }} <br>
+            {{ ad.category.name }}
+        </div>
+        <ul class="list-group list-group-flush">
+            <div class="card-body">
+                
+                <p class="card-text">{{ ad.description |length > 50 ? ad.description|slice(0, 100) ~ '...' : ad.description }}</p>
+            </div>
+            <li class="list-group-item">
+                <h5 class="card-title">soumis le {{ ad.dateCreated | date('d/m/Y') }}</h5>
+            </li>
+            <li class="list-group-item">
+                {{ ad.city }} <br>{{ ad.zipCode }}
+            </li>
+            <li class="list-group-item">
+                <h5>Prix : {{ ad.price }} € </h5>
+                <a href="{{ path('ad_view', {'id': ad.id}) }}"><button class="btn-success btn">Voir</button></a>
+            </li>
+        </ul>
+    </div>
+    <br>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}

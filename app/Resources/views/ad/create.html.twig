@@ -4,6 +4,10 @@
 
 {% block content %}
 
+{% block message %}
+    {{ parent() }}
+{% endblock message %}
+
 {{ form_start(form) }}
 {{ form_widget(form) }}
 {{ form_end(form) }}

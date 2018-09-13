@@ -3,7 +3,8 @@
 <br>
 <div class="card">
     <div class="card-header">
-        {{ ad.title }}
+        {{ ad.title }} <br>
+        {{ ad.category.name }}
       </div>
       <ul class="list-group list-group-flush">
           <div class="card-body">
@@ -17,7 +18,7 @@
             {{ ad.city }} <br>{{ ad.zipCode }}
         </li>
         <li class="list-group-item">
-            <h5>Prix : {{ ad.price }} € </h5><button class="btn-primary btn">Acheter</button>
+            <h5>Prix : {{ ad.price }} € </h5>
         </li>
     </ul>
 </div>

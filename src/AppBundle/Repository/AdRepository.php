@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Ad;
 /**
  * AdRepository
  *
@@ -10,5 +11,24 @@ namespace AppBundle\Repository;
  */
 class AdRepository extends \Doctrine\ORM\EntityRepository
 {
-    
+    public function findAll()
+    {
+        return $this->findBy(array(), array('dateCreated' => 'DESC'));
+    }
+
+    public function findbyCategory(int $category){
+        $qb = $this->createQueryBuilder(Ad::class);
+        $res = $qb->SELECT('a')
+            ->FROM('AppBundle\Entity\Ad', 'a')
+            ->JOIN('a.category', 'c')
+            ->WHERE('c.id = ?1')
+            ->ORDERBY('a.dateCreated', 'DESC')
+            ->setParameter(1, $category)
+            ->getQuery()->getResult();
+        return $res;
+    }
+
+    public function findByKeyWord(){
+        
+    }
 }
