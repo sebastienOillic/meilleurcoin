@@ -32,6 +32,6 @@ security:
 
             logout: 
                 path: /logout
-                target: /city/list
+                target: /
     access_control:
         - { path: ^/admin/*, roles: ROLE_ADMIN}
