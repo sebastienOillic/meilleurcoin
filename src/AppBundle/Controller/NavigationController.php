@@ -17,7 +17,17 @@ class NavigationController extends Controller
      */
     public function menuAction(Request $request)
     {
-        return $this->render('navigation/menu.html.twig', ['title' => "Menu"]);
+        $lolTitles = [
+            'On vous laisse deviner qui on concurrence.',
+            'L\'occasion au prix du neuf !',
+            'Si vous avez une meilleure idée de nom, on prend!',
+            'Les enfants sont maintenant acceptés dans nos annonces!',
+            'Là où l\'arnaque est légale!'
+        ];
+        $rand = rand(0, count($lolTitles) - 1);
+        $lolTitle = $lolTitles[$rand];
+        return $this->render('navigation/menu.html.twig', ['title' => "Menu",
+        'lolTitle' => $lolTitle]);
     }
 
     /**
