@@ -16,7 +16,8 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy(array(), array('dateCreated' => 'DESC'));
     }
 
-    public function findbyCategory(int $category){
+    public function findbyCategory(int $category) : array
+    {
         $qb = $this->createQueryBuilder(Ad::class);
         $res = $qb->SELECT('a')
             ->FROM('AppBundle\Entity\Ad', 'a')
@@ -28,7 +29,26 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
         return $res;
     }
 
-    public function findByKeyWord(){
-        
+    public function findByKeyWord(string $input) : array
+    {
+        $qb = $this->createQueryBuilder(Ad::class);
+        $res = $qb->SELECT('a')
+            ->FROM('AppBundle\Entity\Ad', 'a')
+            ->JOIN('a.category', 'c')
+            ->WHERE('a.title LIKE ?1 
+                    OR a.description LIKE ?2 
+                    OR c.name LIKE ?3 
+                    OR a.city LIKE ?4 
+                    OR a.zipCode LIKE ?5')
+            ->ORDERBY('a.dateCreated', 'DESC')
+            ->setParameters([
+                '1' => '%'.$input.'%',
+                '2' => '%'.$input.'%',
+                '3' => '%'.$input.'%',
+                '4' => '%'.$input.'%',
+                '5' => '%'.$input.'%'
+            ])
+            ->getQuery()->getResult();
+        return $res;
     }
 }

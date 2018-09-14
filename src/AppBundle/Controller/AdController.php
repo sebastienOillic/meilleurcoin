@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Category;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * @Route(path="/ad", name="ad_")
@@ -126,11 +127,24 @@ class AdController extends Controller
         ])
         ->add('submit', SubmitType::class , ['label' => 'Trier par catégorie'])
         ->getForm();
+        $keyWordForm = $this->createFormBuilder()
+        ->add('keyword', TextType::class, [
+            'label' => 'Mot-clé : '
+        ])
+        ->add('submit', SubmitType::class , ['label' => 'Trier par mot-clé'])
+        ->getForm();
         $adRepo = $this->getDoctrine()->getRepository(Ad::class);
         dump($request->request);
-        if ($request->request->get('form')['category'] != null && is_numeric($request->request->get('form')['category'])){
+        if (isset($request->request->get('form')['category']) && is_numeric($request->request->get('form')['category'])){
+            // category form submitted
             $category = (int)$request->request->get('form')['category'];
             $ads = $adRepo->findByCategory($category);
+
+        } else if (isset($request->request->get('form')['keyword'])){
+            // keyword form submitted
+            $keyword = $request->request->get('form')['keyword'];
+            $ads = $adRepo->findByKeyWord($keyword);
+
         } else {
             $ads = $adRepo->findAll();
         }
@@ -138,7 +152,8 @@ class AdController extends Controller
         return $this->render('ad/list.html.twig', [
             'ads' => $ads,
             'title' => 'Annonces',
-            'categoryForm' => $categoryForm->createView()
+            'categoryForm' => $categoryForm->createView(),
+            'keywordForm' => $keyWordForm->createView()
         ]);
     }
 
