@@ -35,18 +35,14 @@ class AdRepository extends \Doctrine\ORM\EntityRepository
         $res = $qb->SELECT('a')
             ->FROM('AppBundle\Entity\Ad', 'a')
             ->JOIN('a.category', 'c')
-            ->WHERE('a.title LIKE ?1 
-                    OR a.description LIKE ?2 
-                    OR c.name LIKE ?3 
-                    OR a.city LIKE ?4 
-                    OR a.zipCode LIKE ?5')
+            ->WHERE('a.title LIKE :input 
+                    OR a.description LIKE :input 
+                    OR c.name LIKE :input 
+                    OR a.city LIKE :input 
+                    OR a.zipCode LIKE :input')
             ->ORDERBY('a.dateCreated', 'DESC')
             ->setParameters([
-                '1' => '%'.$input.'%',
-                '2' => '%'.$input.'%',
-                '3' => '%'.$input.'%',
-                '4' => '%'.$input.'%',
-                '5' => '%'.$input.'%'
+                'input' => '%'.$input.'%'
             ])
             ->getQuery()->getResult();
         return $res;
